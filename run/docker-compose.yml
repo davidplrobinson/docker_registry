@@ -20,8 +20,10 @@ services:
    environment:
      TCP_PORTS: '5000'
      VIRTUAL_HOST: '*:5000, https://*:5000'
-     FORCE_SSL: 'true'
+     FORCE_SSL: 'false'
      REGISTRY_STORAGE_DELETE_ENABLED: 'true'
+   volumes:
+     - ~/reg:/var/lib/registry
  registry-ui:
    image: konradkleine/docker-registry-frontend:v2
    restart: always
