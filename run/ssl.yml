@@ -1,6 +1,7 @@
 version: '2'
 services:
- lb:
+ haproxy:
+   image: m21lab/haproxy:1.6.2
    links:
      - letsencrypt
    volumes_from:
@@ -10,6 +11,7 @@ services:
    environment:
      DOMAINS: 'dev2.eagerduck.com'
      EMAIL: 'david@eagerduck.com'
+     LOAD_BALANCER_SERVICE_NAME: 'haproxy'
      OPTIONS: '--staging'
  registry:
    volumes_from:
