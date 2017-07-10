@@ -22,8 +22,12 @@ services:
      VIRTUAL_HOST: '*:5000, https://*:5000'
      FORCE_SSL: 'false'
      REGISTRY_STORAGE_DELETE_ENABLED: 'true'
+     REGISTRY_AUTH: 'htpasswd'
+     REGISTRY_AUTH_HTPASSWD_REALM: 'Paritech Docker Registry'
+     REGISTRY_AUTH_HTPASSWD_PATH: '/httpasswd_storage/htpasswd'
    volumes:
      - ~/reg:/var/lib/registry
+     - ~/registry_htpasswd:/httpasswd_storage
  registry-ui:
    image: konradkleine/docker-registry-frontend:v2
    restart: always
