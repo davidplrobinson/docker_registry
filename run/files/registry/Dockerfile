@@ -1,4 +1,4 @@
-FROM registry:2.5.1
+FROM registry:2.6.1
 
 COPY custom-entrypoint.sh /entrypoint.sh
 
