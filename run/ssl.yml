@@ -9,18 +9,18 @@ services:
  letsencrypt:
    image: m21lab/letsencrypt:1.0
    environment:
-     DOMAINS: 'dev1.eagerduck.com'
-     EMAIL: 'david@eagerduck.com'
+     DOMAINS: 'docker.paritech.com'
+     EMAIL: 'david@paritech.com'
      LOAD_BALANCER_SERVICE_NAME: 'lb'
  registry:
    volumes_from:
      - letsencrypt:ro
    environment:
-     REGISTRY_HTTP_SECRET: "ljshdgljshfglsf"
-     REGISTRY_HTTP_TLS_CERTIFICATE: /etc/letsencrypt/live/dev1.eagerduck.com/fullchain.pem
-     REGISTRY_HTTP_TLS_KEY: /etc/letsencrypt/live/dev1.eagerduck.com/privkey.pem
+     REGISTRY_HTTP_SECRET: "secret_qTl0HN5MlRgaCCPUTtXN"
+     REGISTRY_HTTP_TLS_CERTIFICATE: /etc/letsencrypt/live/docker.paritech.com/fullchain.pem
+     REGISTRY_HTTP_TLS_KEY: /etc/letsencrypt/live/docker.paritech.com/privkey.pem
  registry-ui:
    environment:
      FORCE_SSL: 'true'
-     ENV_REGISTRY_PROXY_FQDN: 'dev1.eagerduck.com'
+     ENV_REGISTRY_PROXY_FQDN: 'docker.paritech.com'
      ENV_DOCKER_REGISTRY_USE_SSL: 1
