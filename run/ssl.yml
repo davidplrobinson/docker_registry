@@ -1,6 +1,6 @@
 version: '2'
 services:
- haproxy:
+ lb:
    image: m21lab/haproxy:1.6.2
    links:
      - letsencrypt
@@ -9,19 +9,18 @@ services:
  letsencrypt:
    image: m21lab/letsencrypt:1.0
    environment:
-     DOMAINS: 'dev2.eagerduck.com'
+     DOMAINS: 'dev1.eagerduck.com'
      EMAIL: 'david@eagerduck.com'
-     LOAD_BALANCER_SERVICE_NAME: 'haproxy'
-     OPTIONS: '--staging'
+     LOAD_BALANCER_SERVICE_NAME: 'lb'
  registry:
    volumes_from:
      - letsencrypt:ro
    environment:
-     REGISTRY_HTTP_SECRET: "your-http-secret"
-     REGISTRY_HTTP_TLS_CERTIFICATE: /etc/letsencrypt/live/dev2.eagerduck.com/fullchain.pem
-     REGISTRY_HTTP_TLS_KEY: /etc/letsencrypt/live/dev2.eagerduck.com/privkey.pem
+     REGISTRY_HTTP_SECRET: "ljshdgljshfglsf"
+     REGISTRY_HTTP_TLS_CERTIFICATE: /etc/letsencrypt/live/dev1.eagerduck.com/fullchain.pem
+     REGISTRY_HTTP_TLS_KEY: /etc/letsencrypt/live/dev1.eagerduck.com/privkey.pem
  registry-ui:
    environment:
      FORCE_SSL: 'true'
-     ENV_REGISTRY_PROXY_FQDN: 'dev2.eagerduck.com'
+     ENV_REGISTRY_PROXY_FQDN: 'dev1.eagerduck.com'
      ENV_DOCKER_REGISTRY_USE_SSL: 1

@@ -39,3 +39,4 @@ services:
      - registry
    expose:
      - 80
+     - 443
