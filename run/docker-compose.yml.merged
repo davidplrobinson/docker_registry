@@ -5,6 +5,7 @@ services:
    links:
      - registry
      - registry-ui
+     - letsencrypt
    ports:
      - '80:80'
      - '443:443'
@@ -12,6 +13,17 @@ services:
    restart: always
    volumes:
      - /var/run/docker.sock:/var/run/docker.sock
+   volumes_from:
+     - letsencrypt
+ letsencrypt:
+   image: m21lab/letsencrypt:1.0
+   environment:
+     DOMAINS: 'docker.paritech.com'
+     EMAIL: 'david@paritech.com'
+     LOAD_BALANCER_SERVICE_NAME: 'lb'
+   volumes:
+     - /mnt/data/registry/ssl/live:/etc/letsencrypt/live
+     - /mnt/data/registry/ssl/archive:/etc/letsencrypt/archive
  registry:
    build: ./files/registry
    restart: always
@@ -25,9 +37,14 @@ services:
      REGISTRY_AUTH: 'htpasswd'
      REGISTRY_AUTH_HTPASSWD_REALM: 'Paritech Docker Registry'
      REGISTRY_AUTH_HTPASSWD_PATH: '/httpasswd_storage/htpasswd'
+     REGISTRY_HTTP_SECRET: "secret_qTl0HN5MlRgaCCPUTtXN"
+     REGISTRY_HTTP_TLS_CERTIFICATE: /etc/letsencrypt/live/docker.paritech.com/fullchain.pem
+     REGISTRY_HTTP_TLS_KEY: /etc/letsencrypt/live/docker.paritech.com/privkey.pem
    volumes:
      - /mnt/data/registry/reg:/var/lib/registry
      - /mnt/data/registry/htpasswd:/httpasswd_storage
+   volumes_from:
+     - letsencrypt:ro
  registry-ui:
    image: konradkleine/docker-registry-frontend:v2
    restart: always
@@ -35,6 +52,9 @@ services:
      VIRTUAL_HOST: 'http://*, https://*'
      ENV_DOCKER_REGISTRY_HOST: 'registry'
      ENV_DOCKER_REGISTRY_PORT: 5000
+     FORCE_SSL: 'true'
+     ENV_REGISTRY_PROXY_FQDN: 'docker.paritech.com'
+     ENV_DOCKER_REGISTRY_USE_SSL: 1
    links:
      - registry
    expose:
