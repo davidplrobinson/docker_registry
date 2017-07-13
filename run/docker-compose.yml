@@ -26,8 +26,8 @@ services:
      REGISTRY_AUTH_HTPASSWD_REALM: 'Docker Registry'
      REGISTRY_AUTH_HTPASSWD_PATH: '/httpasswd_storage/htpasswd'
    volumes:
-     - /mnt/data/registry/reg:/var/lib/registry
-     - /mnt/data/registry/htpasswd:/httpasswd_storage
+     - {local path to storage}/registry:/var/lib/registry
+     - {local path to storage}/htpasswd:/httpasswd_storage
  registry-ui:
    image: konradkleine/docker-registry-frontend:v2
    restart: always
