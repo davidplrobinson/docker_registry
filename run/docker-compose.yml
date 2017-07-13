@@ -23,7 +23,7 @@ services:
      FORCE_SSL: 'false'
      REGISTRY_STORAGE_DELETE_ENABLED: 'true'
      REGISTRY_AUTH: 'htpasswd'
-     REGISTRY_AUTH_HTPASSWD_REALM: 'Paritech Docker Registry'
+     REGISTRY_AUTH_HTPASSWD_REALM: 'Docker Registry'
      REGISTRY_AUTH_HTPASSWD_PATH: '/httpasswd_storage/htpasswd'
    volumes:
      - /mnt/data/registry/reg:/var/lib/registry
