@@ -12,6 +12,7 @@ services:
      DOMAINS: '{fqdn goes here}'
      EMAIL: '{email address goes here}'
      LOAD_BALANCER_SERVICE_NAME: 'lb'
+     OPTIONS: '--staging'
  registry:
    volumes_from:
      - letsencrypt:ro
