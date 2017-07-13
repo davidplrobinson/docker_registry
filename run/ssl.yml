@@ -9,18 +9,18 @@ services:
  letsencrypt:
    image: m21lab/letsencrypt:1.0
    environment:
-     DOMAINS: 'docker.paritech.com'
-     EMAIL: 'david@paritech.com'
+     DOMAINS: '{fqdn goes here}'
+     EMAIL: '{email address goes here}'
      LOAD_BALANCER_SERVICE_NAME: 'lb'
  registry:
    volumes_from:
      - letsencrypt:ro
    environment:
-     REGISTRY_HTTP_SECRET: "secret_qTl0HN5MlRgaCCPUTtXN"
-     REGISTRY_HTTP_TLS_CERTIFICATE: /etc/letsencrypt/live/docker.paritech.com/fullchain.pem
-     REGISTRY_HTTP_TLS_KEY: /etc/letsencrypt/live/docker.paritech.com/privkey.pem
+     REGISTRY_HTTP_SECRET: "secret_{random secret goes here}"
+     REGISTRY_HTTP_TLS_CERTIFICATE: /etc/letsencrypt/live/{fqdn goes here}/fullchain.pem
+     REGISTRY_HTTP_TLS_KEY: /etc/letsencrypt/live/{fqdn goes here}/privkey.pem
  registry-ui:
    environment:
      FORCE_SSL: 'true'
-     ENV_REGISTRY_PROXY_FQDN: 'docker.paritech.com'
+     ENV_REGISTRY_PROXY_FQDN: '{fqdn goes here}'
      ENV_DOCKER_REGISTRY_USE_SSL: 1
